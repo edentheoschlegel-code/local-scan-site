@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://localscanapp.com/sitemap.xml

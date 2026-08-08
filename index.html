@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Local Scan ships on iPhone and iPad only. This page is a landing page about
+     that app, not the app itself, so it loads one script (theme-boot.js, from
+     this origin) and opens no connection at all. Inline script is blocked,
+     which is why the theme boot is a file. Delivered by <meta>, which governs
+     this document. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Local Scan · Scan documents, right on your device</title>
+<meta name="description" content="Point your camera at a page and Local Scan finds the edges, straightens the picture, evens out the lighting and cleans up the text. It all happens on your iPhone or iPad. Nothing is uploaded.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="canonical" href="https://localscanapp.com/">
+<meta name="theme-color" id="themeColorMeta" content="#f7f7fb">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Scan">
+<meta property="og:url" content="https://localscanapp.com/">
+<meta property="og:title" content="Local Scan · Scan documents, right on your device">
+<meta property="og:description" content="Point your camera at a page and Local Scan finds the edges, straightens the picture, evens out the lighting and cleans up the text. It all happens on your iPhone or iPad. Nothing is uploaded.">
+<meta property="og:image" content="https://localscanapp.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Local Scan, a document scanner that runs on your device">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Local Scan · Scan documents, right on your device">
+<meta name="twitter:description" content="Point your camera at a page and Local Scan finds the edges, straightens the picture, evens out the lighting and cleans up the text. It all happens on your iPhone or iPad. Nothing is uploaded.">
+<meta name="twitter:image" content="https://localscanapp.com/assets/og-image.png">
+<!-- Same file and same localStorage key as the app, so someone who arrives here
+     from a dark Local Scan does not get a flash of white. Blocking on purpose.
+     It also keeps the one theme-color tag in step with the theme it applies. -->
+<script src="theme-boot.js"></script>
+<style>
+  /* Local Scan's own tokens, the same values privacy.html and support.html
+     carry, so the three pages on this domain are one surface. Burnt orange is
+     Local Scan's accent across the family. */
+  :root {
+    --brand: #c2410c; --brand-dark: #9a3412; --brand-soft: #fff5ed; --brand-border: #fed7aa;
+    --ink: #1a1a2e; --muted: #6b7280; --faint: #9095a1; --line: #e7e8ee; --bg: #f7f7fb; --card: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --brand: #fb923c; --brand-dark: #fdba74; --brand-soft: #2a1a0d; --brand-border: #6b3d1a;
+      --ink: #e8e8ed; --muted: #a1a3ad; --faint: #83868f; --line: #2c2e37; --bg: #15161a; --card: #1c1d22;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --brand: #fb923c; --brand-dark: #fdba74; --brand-soft: #2a1a0d; --brand-border: #6b3d1a;
+    --ink: #e8e8ed; --muted: #a1a3ad; --faint: #83868f; --line: #2c2e37; --bg: #15161a; --card: #1c1d22;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] { color-scheme: light; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px; line-height: 1.6; color: var(--ink); background: var(--bg);
+    padding: 0 max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  a { color: var(--brand); }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 3px; }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: max(18px, env(safe-area-inset-top)) 0 0;
+  }
+  .logo { display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 800; letter-spacing: -.2px; }
+  .logo img { border-radius: 7px; display: block; }
+  .accent-word { color: var(--brand); }
+  .privacy-pill {
+    font-size: 11.5px; font-weight: 650; color: var(--brand-dark);
+    background: var(--brand-soft); border: 1px solid var(--brand-border);
+    border-radius: 999px; padding: 6px 11px; white-space: nowrap;
+  }
+
+  .hero { padding: 52px 0 8px; text-align: center; }
+  .hero h1 {
+    font-size: clamp(30px, 6.4vw, 46px); font-weight: 800; letter-spacing: -1px;
+    line-height: 1.12; margin-bottom: 14px;
+  }
+  .hero h1 .accent { color: var(--brand); display: inline-block; }
+  .lede { font-size: clamp(14.5px, 2vw, 17px); color: var(--muted); max-width: 560px; margin: 0 auto; }
+
+  .cta { margin: 26px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .soonpill {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 650; color: var(--brand-dark);
+    background: var(--card); border: 1px solid var(--brand-border);
+    border-radius: 999px; padding: 10px 18px; box-shadow: var(--shadow-sm);
+  }
+  .soonpill .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--brand); }
+  .cta-note { font-size: 12.5px; color: var(--faint); }
+
+  .cards { display: grid; gap: 12px; margin-top: 46px; }
+  @media (min-width: 660px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px 20px; box-shadow: var(--shadow-sm);
+  }
+  .card h2 { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+  .card p { font-size: 14px; color: var(--muted); }
+
+  .promise {
+    margin-top: 12px; background: var(--brand-soft); border: 1px solid var(--brand-border);
+    border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow-sm);
+  }
+  .promise h2 { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+  .promise p { font-size: 14px; margin-bottom: 10px; }
+  .promise p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--muted); text-align: center;
+  }
+  footer a { color: var(--muted); }
+  footer .fline { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <span class="logo">
+      <img src="assets/brand-icon-512.png" alt="" width="30" height="30">
+      <b>Local <span class="accent-word">Scan</span></b>
+    </span>
+    <span class="privacy-pill">Private by design</span>
+  </div>
+
+  <div class="hero">
+    <h1>Scan documents, <span class="accent">right on your device</span></h1>
+    <p class="lede">Point your camera at a page. Local Scan straightens what it sees, evens out the lighting and cleans up the text, so a photograph taken on a kitchen table comes back looking like a scan.</p>
+    <div class="cta">
+      <span class="soonpill"><span class="dot"></span>App Store &middot; coming soon</span>
+      <span class="cta-note">An app for iPhone and iPad.</span>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h2>Capture</h2>
+      <p>Press the shutter once per page and keep going, or bring in pictures you already took.</p>
+    </div>
+    <div class="card">
+      <h2>Straighten</h2>
+      <p>Drag the four corners to the edges of the page. A picture taken at an angle comes back square.</p>
+    </div>
+    <div class="card">
+      <h2>Clean up</h2>
+      <p>Local Scan works out how bright the paper is across the picture and lifts it to white, so the text reads clearly.</p>
+    </div>
+  </div>
+
+  <div class="promise">
+    <h2>It all happens on your device</h2>
+    <p>There is no account, no signup and no sync. Your pages are never uploaded, and the app keeps nothing of them: they live in its memory while you work and are gone when you close it. <a href="privacy.html">Privacy</a> sets out exactly what is written down, which is your export settings and nothing else.</p>
+    <p>The scanner is free, with no limit and no watermark. The five features that read the words off your pages are Local Scan Pro, a one time $12.99 purchase in the app. <a href="support.html">Help</a> explains which is which.</p>
+  </div>
+
+  <footer>
+    <p class="fline"><a href="privacy.html">Privacy</a> &middot; <a href="support.html">Help</a> &middot; <a href="https://edenapps.app/terms.html" target="_blank" rel="noopener">Terms</a></p>
+    <p class="fline">An Eden Apps app &middot; <a href="https://edenapps.app" target="_blank" rel="noopener">edenapps.app</a></p>
+    <p>Questions are welcome at <a href="mailto:support@edenapps.app">support@edenapps.app</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- DEPLOY COPY, localscanapp.com. Byte-identical to the support.html that
+     ships inside the app, with exactly one change: class="native" on <html>.
+     Local Scan is an iPhone and iPad app and nothing else, so this domain must
+     show the app answers, not the browser answers. The page already carries
+     that mechanism for use inside the Capacitor shell: .only-web / .only-ios,
+     keyed off html.native, which theme-boot.js sets before paint when
+     Capacitor is present. Setting the class in the markup uses that same
+     mechanism without an inline script (the page's CSP forbids inline script)
+     and without depending on JavaScript running at all. Do not make this edit
+     in the app source. -->
+<html lang="en" class="native">
+<head>
+<meta charset="UTF-8">
+<!-- One script only — theme-boot.js, from this origin — so script-src is 'self'
+     rather than 'none'. The rest stays stricter than the app's own policy:
+     connect-src stays 'none', and theme-boot.js never opens a connection. No
+     inline script is allowed, which is why the theme boot is a file. Delivered
+     by <meta>, which governs this document. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Help — Local Scan</title>
+<meta name="description" content="How to scan a page with Local Scan — capturing, straightening, cleaning up — and answers to common questions.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://localscanapp.com/support.html">
+<!-- ONE theme-color tag, kept in step with data-theme by theme-boot.js, exactly
+     as the app page does it. The two media-gated tags this replaces followed
+     the OS, not the in-app choice: a user on a light OS who picked Dark in the
+     app got a white browser bar above a dark page. -->
+<meta name="theme-color" id="themeColorMeta" content="#f7f7fb">
+<!-- Applies the theme chosen IN THE APP before this page paints, so following
+     the footer's Help link out of a dark Local Scan is not a flash of white.
+     Same file and same localStorage key as the app; it resolves "system" to the
+     OS preference itself. Blocking on purpose — deferring it would paint the
+     light theme first. -->
+<script src="theme-boot.js"></script>
+<style>
+  :root {
+    --brand: #c2410c; --brand-dark: #9a3412; --brand-soft: #fff5ed; --brand-border: #fed7aa;
+    --ink: #1a1a2e; --muted: #6b7280; --line: #e7e8ee; --bg: #f7f7fb; --card: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06);
+    color-scheme: light;
+  }
+  /* Dark mode follows the choice made in the app: theme-boot.js sets data-theme
+     on <html> before paint, and [data-theme="dark"] below is what keys the dark
+     tokens. The media block is the no-JS fallback — for JavaScript off, or the
+     file missing offline — scoped to :root:not([data-theme]) so it only speaks
+     when nothing else has and can never fight an explicit choice. Both carry
+     the same token values, which are the app's own dark tokens, so arriving
+     here from the main page is not a jump in brightness. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --brand: #fb923c; --brand-dark: #fdba74; --brand-soft: #2a1a0d; --brand-border: #6b3d1a;
+      --ink: #e8e8ed; --muted: #a1a3ad; --line: #2c2e37; --bg: #15161a; --card: #1c1d22;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --brand: #fb923c; --brand-dark: #fdba74; --brand-soft: #2a1a0d; --brand-border: #6b3d1a;
+    --ink: #e8e8ed; --muted: #a1a3ad; --line: #2c2e37; --bg: #15161a; --card: #1c1d22;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+  /* Explicit, because the :root rule above sets color-scheme: light and an
+     in-app Light choice has to be able to say so on a dark OS. */
+  :root[data-theme="light"] { color-scheme: light; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px; line-height: 1.6; color: var(--ink); background: var(--bg);
+    padding: 0 max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding-top: 44px; }
+  a { color: var(--brand); }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 3px; }
+  h1 { font-size: 32px; font-weight: 800; letter-spacing: -.7px; margin-bottom: 6px; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+  h2 { font-size: 18px; font-weight: 800; margin: 30px 0 8px; }
+  h3 { font-size: 15px; font-weight: 700; margin: 18px 0 4px; }
+  p { margin-bottom: 12px; }
+  /* Platform-aware answers. Several questions here have a browser answer and an
+     app answer that genuinely differ — where the camera permission lives, what
+     closing the thing does, whether the recogniser has to be fetched. .only-web
+     is the browser answer, .only-ios the app answer, and theme-boot.js sets
+     html.native before paint. Same pattern as privacy.html. */
+  .only-ios { display: none; }
+  html.native .only-web { display: none; }
+  html.native .only-ios { display: block; }
+  /* display:block strips a list item of its marker, so an app-only <li> came out
+     without its bullet while the web-only ones beside it kept theirs. Restore it,
+     scoped under html.native so the web build still hides these lines: an
+     unscoped li.only-ios rule outranks .only-ios{display:none} and would show
+     the app text in a browser. */
+  html.native li.only-ios { display: list-item; }
+  ol, ul { margin: 0 0 12px 20px; }
+  li { margin-bottom: 6px; }
+  .steps {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px 20px 18px 40px; box-shadow: var(--shadow-sm);
+  }
+  .steps li:last-child { margin-bottom: 0; }
+  footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Help</h1>
+  <p class="sub">Local Scan · last updated 8 August 2026</p>
+
+  <h2>Scanning a document</h2>
+  <ol class="steps">
+    <li><strong>Add your pages.</strong> Choose <em>Use camera</em> and press the shutter once per page — you can take several in a row without stopping. Or bring in images you already have — choose them with the <em>Choose images</em> button, or drop them onto the dashed area.</li>
+    <li><strong>Set the corners.</strong> Drag the four handles to the corners of the page in the picture. Local Scan straightens whatever is inside them into a proper rectangle, so a photo taken at an angle still comes out square.</li>
+    <li><strong>Pick a look.</strong> <em>Document</em> is usually what you want for printed text. <em>Greyscale</em> keeps shading. <em>Original</em> leaves the colours alone.</li>
+    <li><strong>Put the pages in order.</strong> Use the up and down buttons on each row. On a larger screen you can also drag a row by the handle at its left.</li>
+    <li class="only-web"><strong>Choose a format and save.</strong> PDF, Word, plain text, Markdown or individual images — pick one, adjust whatever settings it offers, and save. There is also a <em>Copy the text</em> button that puts the words straight on your clipboard.</li>
+    <li class="only-ios"><strong>Choose a format and save.</strong> PDF, Word, plain text, Markdown or individual images — pick one, adjust whatever settings it offers, and save. iOS then asks where the file should go: Files, Mail, Messages, or any app that takes a document. There is also a <em>Copy the text</em> button. After a long read iOS may pass the words to the share sheet instead, where Copy is one of the choices.</li>
+  </ol>
+
+  <h2>Common questions</h2>
+
+  <h3>Where do my scans go?</h3>
+  <p class="only-web">Nowhere. Everything happens on your device and nothing is uploaded — see <a href="privacy.html">Privacy</a> for the detail, including the browser rule behind it and how to check for yourself.</p>
+  <p class="only-ios">Wherever you send them. Everything happens on your device and nothing is uploaded; when you save, iOS asks which app or folder the file goes to. On the way there a copy of the file is written into this app's own cache area, because that is how iOS hands a file to the share sheet, and the app removes that copy once the sheet has finished with it. Nothing else is written. See <a href="privacy.html">Privacy</a> for the detail and how to check for yourself.</p>
+
+  <h3 class="only-web">I closed the tab and my pages were gone.</h3>
+  <h3 class="only-ios">I closed the app and my pages were gone.</h3>
+  <p class="only-web">That is how this version works, and it is deliberate: your captures are held in the page's memory and never written to storage, so no part of your pages is left behind on the machine. Your export settings are kept, and <a href="privacy.html">Privacy</a> lists them. Local Scan asks you to confirm before you leave with pages still open. Save your file before closing the tab.</p>
+  <p class="only-ios">That is how this version works, and it is deliberate: your captures are held in the app's memory and never written to storage, so no part of your pages is left behind on the device. What is kept is your export settings; a file you save passes through this app's cache area on its way to the share sheet and is removed once the sheet is done with it — <a href="privacy.html">Privacy</a> covers both. Your pages go when the app closes, so save your file before you leave.</p>
+
+  <h3>The camera won't start.</h3>
+  <p class="only-web">A browser will only hand the camera to a page served over <code>https://</code> (or on <code>localhost</code>). Beyond that, the usual causes are that permission was declined for this site, or another app or tab already has the camera. Local Scan names the cause when the browser reports one, and importing photos you have already taken always works regardless.</p>
+  <p class="only-ios">The usual cause is that camera permission was declined the first time it was asked for. You can turn it back on in Settings › Local Scan › Camera. Otherwise, another app may still have the camera. Local Scan names the cause when iOS reports one, and importing photos you have already taken always works regardless.</p>
+
+  <h3>Which image formats can I bring in?</h3>
+  <p class="only-web">JPEG and PNG work everywhere, and most other common image formats — WebP, GIF and AVIF among them — open wherever your browser can decode them. HEIC and HEIF files — what an iPhone produces by default — only open if your browser can decode them, which today mainly means Safari on Apple devices. If a file can't be opened, Local Scan says so rather than failing quietly. Converting to JPEG first always works.</p>
+  <p class="only-ios">JPEG and PNG work, and so do HEIC and HEIF — what an iPhone produces by default — because iOS can decode them itself. Other common image formats — WebP, GIF and AVIF among them — open wherever iOS can decode them. If a file can't be opened, Local Scan says so rather than failing quietly.</p>
+
+  <h3>Document mode made a photograph look wrong.</h3>
+  <p>Document mode assumes it is looking at ink on paper: it works out how bright the paper is in each part of the picture and lifts it to white. A large area of even mid-grey — the sky in a photograph, a block of shading — reads as paper to it and goes white. For anything that isn't a printed page, use <em>Greyscale</em> or <em>Original</em>.</p>
+
+  <h3>Which quality should I choose?</h3>
+  <p><em>Balanced</em> suits most scans. <em>Smaller file</em> is fine when you only need to read the text. <em>Lossless (PNG)</em> pairs well with the Document look, because the sharp black-and-white edges it produces are exactly what JPEG compression handles worst.</p>
+
+  <h3>What does "fit to image" mean?</h3>
+  <p>Page size is a PDF setting. Each PDF page takes the shape of its own picture, so nothing is cropped or padded. A PDF page also has a physical size, and Local Scan works that out by treating the picture as a 150 dpi scan — so a full page photographed close up comes out at roughly the size of the real thing. Choose A4 or US Letter instead if the file has to print on standard paper; each page is then fitted and centred, in whichever orientation matches the picture.</p>
+
+  <h3>What are Word, Text and Markdown reading from?</h3>
+  <p class="only-web">Those formats, and the <em>Picture + searchable text</em> PDF, need the words off the page rather than a picture of them. Local Scan reads them with a text recogniser that runs on your device — the first time you save one of those formats, or copy the text, it fetches the recogniser (about 6 MB, once) from the same place the page came from, and after that it works offline. Your pages are never part of that. This version reads <strong>English</strong>, and does best on sharp, upright pages; if a page comes back empty, the <em>Document</em> look under Adjust page usually helps.</p>
+  <p class="only-ios">Those formats, and the <em>Picture + searchable text</em> PDF, need the words off the page rather than a picture of them. Local Scan reads them with a text recogniser that runs on your device — about 13 MB of it, installed with the app, which is a fair part of the app's size on disk. Nothing is fetched and your pages never leave. This version reads <strong>English</strong>, and does best on sharp, upright pages; if a page comes back empty, the <em>Document</em> look under Adjust page usually helps.</p>
+
+  <h3>What is a searchable PDF?</h3>
+  <p>The same page picture you would get otherwise, with the recognised words laid underneath it — invisible, but selectable, copyable and findable with your reader's search. The words usually sit under the printed ones, close enough to highlight; when a page gives back no positions they are still there to search, just not under their own glyphs. Recognition is never perfect either, so treat it as a good search index rather than a perfect transcript.</p>
+
+  <!-- Pro is an Apple In-App Purchase and nothing else. No web sale exists, so
+       there is no checkout, no receipt email and no restore code to describe —
+       the .only-web answers still have to be accurate for a reviewer reading
+       this on localscanapp.com, which is why they describe the app's purchase
+       rather than pretending there isn't one. -->
+  <h3>Is there anything to pay for?</h3>
+  <p class="only-web">Not in the browser — everything on this site is free, the text formats included. In the iPhone and iPad app, the five features that read the words off your pages are Local Scan Pro: <em>Word</em>, <em>Text</em>, <em>Markdown</em>, <em>Copy the text</em>, and the <em>Picture + searchable text</em> PDF. Pro there is a one-time $12.99 purchase through the App Store — not a subscription, and you are not charged again. The scanner stays free in the app too: the camera, the corners, the clean-up, picture-only PDFs and image exports, with no limit and no watermark.</p>
+  <p class="only-ios">The scanner is free — the camera, the corners, the clean-up, picture-only PDFs and image exports, with no limit and no watermark. The five features that read the words off your pages are Local Scan Pro: <em>Word</em>, <em>Text</em>, <em>Markdown</em>, <em>Copy the text</em>, and the <em>Picture + searchable text</em> PDF. Pro is a one-time $12.99 purchase through the App Store — not a subscription, and you are not charged again. The App Store shows the price in your own currency, and the exact amount, before you confirm anything.</p>
+
+  <h3>I already bought Pro. How do I get it back?</h3>
+  <p class="only-web">Pro is sold only in the iPhone and iPad app, and it belongs to the Apple Account that bought it. On a new device, or after reinstalling, open the app, choose one of the text formats, and tap <em>Restore purchases</em> on the panel that appears — signed in with that same Apple Account. There is no code to keep and nothing to type.</p>
+  <p class="only-ios">Pro belongs to the Apple Account that bought it. On a new iPhone or iPad, or after reinstalling, choose one of the text formats and tap <em>Restore purchases</em> on the panel that appears. There is no code to keep and nothing to type. If it tells you nothing was found, it is nearly always a different Apple Account — check which one you are signed in with in Settings, then try again.</p>
+
+  <h3>Can I get a refund?</h3>
+  <p>Apple handles refunds for everything bought through the App Store, Local Scan Pro included — we cannot process one ourselves. Ask Apple at <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>, signed in with the Apple Account that made the purchase.</p>
+
+  <h3>Can I use it offline?</h3>
+  <p class="only-web">Yes. Once the page has loaded once, it keeps working with no connection at all — including the camera, the processing, and saving. The one exception is the text recogniser behind Word, Text, Markdown and searchable PDF: it has to load once while you are connected, and then it too works offline.</p>
+  <p class="only-ios">Yes, from the first moment. Everything the app runs came with it, the text recogniser included, so the camera, the processing, the reading and the saving all work in Airplane Mode. Pro works offline too once you own it. Buying or restoring it is the one thing that needs a connection, because that part is Apple's.</p>
+
+  <h3>Can I do it all from the keyboard?</h3>
+  <p>Yes. Tab moves through every control. On a corner handle the arrow keys nudge it, and holding Shift moves it further. The up and down buttons on each page row reorder pages without dragging.</p>
+
+  <h2>Something else</h2>
+  <p class="only-web">Write to <a href="mailto:support@edenapps.app">support@edenapps.app</a> and describe what happened — including which browser and device you were using.</p>
+  <p class="only-ios">Write to <a href="mailto:support@edenapps.app">support@edenapps.app</a> and describe what happened — including which iPhone or iPad you were using and which version of iOS.</p>
+
+  <footer>
+    <a href="index.html">← Back to Local Scan</a> · <a href="privacy.html">Privacy</a> · <a href="https://edenapps.app/terms.html" target="_blank" rel="noopener">Terms</a><br>
+    An Eden Apps app · <a href="https://edenapps.app" target="_blank" rel="noopener">edenapps.app</a>
+  </footer>
+</div>
+</body>
+</html>
