@@ -89,7 +89,10 @@
     font-size: clamp(30px, 6.4vw, 46px); font-weight: 800; letter-spacing: -1px;
     line-height: 1.12; margin-bottom: 14px;
   }
-  .hero h1 .accent { color: var(--brand); display: inline-block; }
+  /* Plain inline, exactly as the app's own hero does it. An inline-block here
+     swallows the space after the comma at some widths, which is the fault the
+     hub hero had to be fixed for. */
+  .hero h1 .accent { color: var(--brand); }
   .lede { font-size: clamp(14.5px, 2vw, 17px); color: var(--muted); max-width: 560px; margin: 0 auto; }
 
   .cta { margin: 26px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
