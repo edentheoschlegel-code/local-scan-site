@@ -96,13 +96,16 @@
   .lede { font-size: clamp(14.5px, 2vw, 17px); color: var(--muted); max-width: 560px; margin: 0 auto; }
 
   .cta { margin: 26px auto 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .soonpill {
+  /* The fill is #c2410c in BOTH themes, the app's own rule: white text on the
+     dark theme's lighter accent would not pass contrast. */
+  .appbtn {
     display: inline-flex; align-items: center; gap: 7px;
-    font-size: 13px; font-weight: 650; color: var(--brand-dark);
-    background: var(--card); border: 1px solid var(--brand-border);
+    font-size: 13px; font-weight: 650; color: #fff;
+    background: #c2410c; border: 1px solid #c2410c;
     border-radius: 999px; padding: 10px 18px; box-shadow: var(--shadow-sm);
+    text-decoration: none;
   }
-  .soonpill .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--brand); }
+  .appbtn:hover { background: #9a3412; border-color: #9a3412; }
   .cta-note { font-size: 12.5px; color: var(--faint); }
 
   .cards { display: grid; gap: 12px; margin-top: 46px; }
@@ -145,7 +148,7 @@
     <h1>Scan documents, <span class="accent">right on your device</span></h1>
     <p class="lede">Point your camera at a page and mark its corners. Local Scan straightens the picture, evens out the lighting and cleans up the text, so a photograph taken on a kitchen table comes back looking like a scan.</p>
     <div class="cta">
-      <span class="soonpill"><span class="dot"></span>App Store &middot; coming soon</span>
+      <a class="appbtn" href="https://apps.apple.com/app/id6799491646" title="Opens Local Scan on the App Store">App Store<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <span class="cta-note">An app for iPhone and iPad.</span>
     </div>
   </div>
