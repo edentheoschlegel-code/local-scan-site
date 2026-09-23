@@ -52,6 +52,6 @@ addresses, and `www` is a CNAME to the Pages host.
 
 ## License
 
-Copyright (c) 2026 Eden Schlegel (Eden Apps). All rights reserved.
+Copyright (c) 2026 Eden Apps. All rights reserved.
 
 This is not open-source software. Please do not copy, modify or redistribute it without written permission from Eden Apps. See `LICENSE`.
